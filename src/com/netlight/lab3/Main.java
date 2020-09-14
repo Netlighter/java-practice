@@ -1,5 +1,7 @@
 package com.netlight.lab3;
 
+import com.netlight.lab3.Human.LeftHand;
+
 class Circle3{
     int x,y,rad;
     Circle3(int x, int y, int rad){
@@ -43,50 +45,86 @@ class Circle3{
 }
 
 class Human{
-    Head head = new Head();
-    Right_hand rhand = new Right_hand(20);
-    Right_hand lhand = new Right_hand(20);
 
-    Right_leg rleg = new Right_leg(20);
-    Left_leg lleg = new Left_leg(20);
+    RightHand rhand;
+    RightHand lhand;
+    RightLeg rleg;
+    LeftLeg lleg;
+
+    public Human(){
+        Head head = new Head();
+        rhand = new RightHand(20);
+        lhand = new RightHand(20);
+
+        rleg = new RightLeg(20);
+        lleg = new LeftLeg(20);
+    }
+
+
+
+    class RightLeg{
+        int length;
+        RightLeg(int length){
+            this.length = length;
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length = length;
+        }
+    }
+    class LeftLeg{
+        int length;
+        LeftLeg(int length){ this.length = length; }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length = length;
+        }
+    }
+
+    class RightHand{
+        int length;
+        RightHand(int length){ this.length = length; }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length = length;
+        }
+
+    }
+
+    static class LeftHand{
+        int length;
+        LeftHand(int length){ this.length = length; }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) { this.length = length; }
+    }
+    class Head{
+    }
 
     @Override
     public String toString() {
         return "Human{" +
-                "head=" + head +
-                ", rhand=" + rhand.length +
+                "rhand=" + rhand.length +
                 ", lhand=" + lhand.length +
                 ", rleg=" + rleg.length +
                 ", lleg=" + lleg.length +
+                ", head=default" +
                 '}';
-    }
-
-    class Right_leg{
-        int length;
-        Right_leg(int length){
-            this.length = length;
-        }
-    }
-    class Left_leg{
-        int length;
-        Left_leg(int length){
-            this.length = length;
-        }
-    }
-
-    class Right_hand{
-        int length;
-        Right_hand(int length){
-            this.length = length;
-        }
-    }class Left_hand{
-        int length;
-        Left_hand(int length){
-            this.length = length;
-        }
-    }
-    class Head{
-
     }
 }
 
@@ -137,6 +175,7 @@ class Book{
 public class Main{
     public static void main(String[] args) {
         Human human = new Human();
+        human.rhand.setLength(30);
         Circle3 cr = new Circle3(20, 20, 10);
         Book book = new Book("Author","Title",2020);
         System.out.println(cr);

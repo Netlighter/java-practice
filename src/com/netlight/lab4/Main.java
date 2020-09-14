@@ -54,6 +54,7 @@ class Rectangle extends Shape{
     Rectangle(double width_, double height_){
         this.width = width;
         this.height = height;
+        
     }
     Rectangle(double width, double height, String color, boolean filled){
         super(color,filled);
