@@ -44,26 +44,44 @@ class Circle3{
 
 class Human{
     Head head = new Head();
-    Hand hand = new Hand(20);
-    Leg leg = new Leg(20);
+    Right_hand rhand = new Right_hand(20);
+    Right_hand lhand = new Right_hand(20);
+
+    Right_leg rleg = new Right_leg(20);
+    Left_leg lleg = new Left_leg(20);
 
     @Override
     public String toString() {
         return "Human{" +
-                "hands_length=" + hand.length +
-                ", legs_length=" + leg.length +
+                "head=" + head +
+                ", rhand=" + rhand.length +
+                ", lhand=" + lhand.length +
+                ", rleg=" + rleg.length +
+                ", lleg=" + lleg.length +
                 '}';
     }
 
-    class Leg{
+    class Right_leg{
         int length;
-        Leg(int length){
+        Right_leg(int length){
             this.length = length;
         }
     }
-    class Hand{
+    class Left_leg{
         int length;
-        Hand(int length){
+        Left_leg(int length){
+            this.length = length;
+        }
+    }
+
+    class Right_hand{
+        int length;
+        Right_hand(int length){
+            this.length = length;
+        }
+    }class Left_hand{
+        int length;
+        Left_hand(int length){
             this.length = length;
         }
     }
