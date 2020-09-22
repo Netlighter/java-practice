@@ -55,7 +55,6 @@ class Human{
         Head head = new Head();
         rhand = new RightHand(20);
         lhand = new RightHand(20);
-
         rleg = new RightLeg(20);
         lleg = new LeftLeg(20);
     }
