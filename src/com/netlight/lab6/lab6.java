@@ -1,5 +1,6 @@
 package com.netlight.lab6;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class lab6 {
@@ -52,10 +53,12 @@ public class lab6 {
 
         int[][] original = new int[size][size];
         int[][] summed = new int[size][size];
-        System.out.println("Input "+size*size+" values: ");
+
+        Random r = new Random();
+        System.out.println("Generating "+size*size+" values...\n");
         for (int i=0; i<original.length; i++) {
             for (int j=0; j<original[i].length; j++) {
-                original[i][j] = sc.nextInt();
+                original[i][j] = (int) (Math.random() * ((100 - (-100)) + 1) + (-100));
             }
         }
         System.out.println("Array is:");
