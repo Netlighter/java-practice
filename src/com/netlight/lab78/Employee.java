@@ -17,4 +17,7 @@ public class Employee {
         this.position = emposition;
     }
 
+    public double getSalary() {
+        return position.calcSalary(baseSalary);
+    }
 }

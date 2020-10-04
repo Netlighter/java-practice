@@ -2,7 +2,11 @@ package com.netlight.lab78;
 
 public class TopManager implements EmployeePosition {
 
-    Company company; //TODO done here
+    Company company;
+
+    public TopManager(Company company) {
+        this.company = company;
+    }
 
     @Override
     public String getJobTitle() {
@@ -11,6 +15,8 @@ public class TopManager implements EmployeePosition {
 
     @Override
     public double calcSalary(double baseSalary) {
-        return baseSalary + (baseSalary * 1.5);
+        if (company.income > 10000000) {
+            return baseSalary + (company.income * 1.5);
+        } else return baseSalary;
     }
 }
