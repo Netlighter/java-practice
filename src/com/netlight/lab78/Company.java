@@ -33,19 +33,11 @@ public class Company {
                 income += ((Manager) emp.position).generateIncome();
             }
         }
-        System.out.println("Income is " + income / 1000000 + " m rub");
+        System.out.println("Income is " + (int) income / 1000 + "k rub");
     }
 
     void fire(Employee emp) {
         empar.remove(emp);
-    }
-
-    public double getIncome() {
-        return income;
-    }
-
-    public void setIncome(double income) {
-        this.income = income;
     }
 
     List<Employee> getTopSalaryStaff(int count) {

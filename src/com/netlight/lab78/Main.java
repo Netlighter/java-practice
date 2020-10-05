@@ -6,6 +6,7 @@ public class Main {
 
         String[] ln = new Names().lastname;
         String[] n = new Names().names;
+
         for (int i = 0; i < 80; i++) {
             String lastName = ln[(int) (Math.random() * ln.length)];
             String name = n[(int) (Math.random() * 100)];
@@ -21,34 +22,45 @@ public class Main {
             String name = n[(int) (Math.random() * 100)];
             company.hire(new Employee(lastName, name, 140000, new TopManager(company)));
         }
+
         company.checkIncome();
+
         System.out.println("Top 15 salary:");
         for (Employee x :
                 company.getTopSalaryStaff(15)) {
-            System.out.println((int) x.getSalary() + "rub");
+            System.out.println((int) x.getSalary() + " rub " +
+                    x.name + " " + x.lastname +
+                    " (" + x.position.getJobTitle() + ")");
         }
         System.out.println("\nLowest 30 salary:");
         for (Employee x :
                 company.getLowestSalaryStaff(30)) {
-            System.out.println((int) x.getSalary() + "rub");
+            System.out.println((int) x.getSalary() + " rub " +
+                    x.name + " " + x.lastname +
+                    " (" + x.position.getJobTitle() + ")");
         }
 
-        System.out.println(company.empar.size() + "emps");
+        System.out.println("\n" + company.empar.size() + " emps before fire");
         for (int i = 0; i < company.empar.size() / 2; i++) {
             company.fire(company.empar.get((int) Math.random() * company.empar.size() / 2));
         }
-        System.out.println(company.empar.size() + "emps");
+        System.out.println(company.empar.size() + " emps after fire\n");
 
         company.checkIncome();
+
         System.out.println("Top 15 salary:");
         for (Employee x :
                 company.getTopSalaryStaff(15)) {
-            System.out.println((int) x.getSalary() + "rub");
+            System.out.println((int) x.getSalary() + " rub " +
+                    x.name + " " + x.lastname +
+                    " (" + x.position.getJobTitle() + ")");
         }
         System.out.println("\nLowest 30 salary:");
         for (Employee x :
                 company.getLowestSalaryStaff(30)) {
-            System.out.println((int) x.getSalary() + "rub");
+            System.out.println((int) x.getSalary() + " rub " +
+                    x.name + " " + x.lastname +
+                    " (" + x.position.getJobTitle() + ")");
         }
 
 
