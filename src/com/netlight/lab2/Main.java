@@ -2,6 +2,11 @@ package com.netlight.lab2;
 
 
 class Shape {
+    int field1;
+    String name;
+    boolean is_done;
+    int age;
+
     @Override
     public String toString() {
         System.out.println("why!");
@@ -12,11 +17,6 @@ class Shape {
                 ", age=" + age +
                 '}';
     }
-
-    int field1;
-    String name;
-    boolean is_done;
-    int age;
 }
 
 class Dog {
@@ -44,7 +44,7 @@ class Dog {
     }
 
     public int humanize() {
-        return age*7;
+        return age * 7;
     }
 
     @Override
@@ -56,15 +56,15 @@ class Dog {
     }
 }
 
-class DogNursery{
+class DogNursery {
     Dog[] beds = new Dog[10];
     int last_bed;
 
-    public DogNursery(){
+    public DogNursery() {
         int last_bed = 0;
     }
 
-    public void add(Dog dog){
+    public void add(Dog dog) {
         beds[last_bed] = dog;
         last_bed++;
         System.out.println("success");

@@ -1,4 +1,4 @@
-package com.netlight.lab78;
+package com.netlight.lab7_8;
 
 import java.util.ArrayList;
 import java.util.Comparator;

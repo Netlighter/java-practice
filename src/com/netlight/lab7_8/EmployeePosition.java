@@ -1,4 +1,4 @@
-package com.netlight.lab78;
+package com.netlight.lab7_8;
 
 public interface EmployeePosition {
     Company com = null;

@@ -1,12 +1,11 @@
 package com.netlight.lab3;
 
-import com.netlight.lab3.Human.LeftHand;
+class Circle3 {
+    int x, y, rad;
 
-class Circle3{
-    int x,y,rad;
-    Circle3(int x, int y, int rad){
-        this.x=x;
-        this.y=y;
+    Circle3(int x, int y, int rad) {
+        this.x = x;
+        this.y = y;
         this.rad = rad;
     }
 
@@ -14,20 +13,20 @@ class Circle3{
         return rad;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public void setRad(int rad) {
         this.rad = rad;
     }
 
+    public int getX() {
+        return x;
+    }
+
     public void setX(int x) {
         this.x = x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public void setY(int y) {
@@ -36,7 +35,7 @@ class Circle3{
 
     @Override
     public String toString() {
-        return "Circle{"+
+        return "Circle{" +
                 "x=" + x +
                 ", y=" + y +
                 ", radius=" + rad +
@@ -44,75 +43,19 @@ class Circle3{
     }
 }
 
-class Human{
+class Human {
 
     RightHand rhand;
     RightHand lhand;
     RightLeg rleg;
     LeftLeg lleg;
 
-    public Human(){
+    public Human() {
         Head head = new Head();
         rhand = new RightHand(20);
         lhand = new RightHand(20);
         rleg = new RightLeg(20);
         lleg = new LeftLeg(20);
-    }
-
-
-
-    class RightLeg{
-        int length;
-        RightLeg(int length){
-            this.length = length;
-        }
-
-        public int getLength() {
-            return length;
-        }
-
-        public void setLength(int length) {
-            this.length = length;
-        }
-    }
-    class LeftLeg{
-        int length;
-        LeftLeg(int length){ this.length = length; }
-
-        public int getLength() {
-            return length;
-        }
-
-        public void setLength(int length) {
-            this.length = length;
-        }
-    }
-
-    class RightHand{
-        int length;
-        RightHand(int length){ this.length = length; }
-
-        public int getLength() {
-            return length;
-        }
-
-        public void setLength(int length) {
-            this.length = length;
-        }
-
-    }
-
-    static class LeftHand{
-        int length;
-        LeftHand(int length){ this.length = length; }
-
-        public int getLength() {
-            return length;
-        }
-
-        public void setLength(int length) { this.length = length; }
-    }
-    class Head{
     }
 
     @Override
@@ -125,13 +68,82 @@ class Human{
                 ", head=default" +
                 '}';
     }
+
+    static class LeftHand {
+        int length;
+
+        LeftHand(int length) {
+            this.length = length;
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length = length;
+        }
+    }
+
+    class RightLeg {
+        int length;
+
+        RightLeg(int length) {
+            this.length = length;
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length = length;
+        }
+    }
+
+    class LeftLeg {
+        int length;
+
+        LeftLeg(int length) {
+            this.length = length;
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length = length;
+        }
+    }
+
+    class RightHand {
+        int length;
+
+        RightHand(int length) {
+            this.length = length;
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length = length;
+        }
+
+    }
+
+    class Head {
+    }
 }
 
-class Book{
+class Book {
     String author;
     String name;
     int year;
-    Book(String author, String name, int year){
+
+    Book(String author, String name, int year) {
         this.author = author;
         this.name = name;
         this.year = year;
@@ -141,24 +153,24 @@ class Book{
         return year;
     }
 
-    public String getAuthor() {
-        return author;
+    public void setYear(int year) {
+        this.year = year;
     }
 
-    public String getName() {
-        return name;
+    public String getAuthor() {
+        return author;
     }
 
     public void setAuthor(String author) {
         this.author = author;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return name;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -171,12 +183,12 @@ class Book{
     }
 }
 
-public class Main{
+public class Main {
     public static void main(String[] args) {
         Human human = new Human();
         human.rhand.setLength(30);
         Circle3 cr = new Circle3(20, 20, 10);
-        Book book = new Book("Author","Title",2020);
+        Book book = new Book("Author", "Title", 2020);
         System.out.println(cr);
         System.out.println(human);
         System.out.println(book);
