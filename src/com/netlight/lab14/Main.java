@@ -26,9 +26,9 @@ public class Main {
             ptr[i] = rules[i].split(" ")[1];
 
             if (result.contains(src[i])) result = result.
-                    replaceAll(src[i], ptr[i]);
+                    replaceAll(src[i], " " + ptr[i] + " ");
         }
-        System.out.println(result);
+        System.out.println(result.replace(" ", ""));
 
         // w/ regex
         result = text;
@@ -37,9 +37,9 @@ public class Main {
             Matcher matcher = pattern.matcher(rules[i]);
             if (matcher.find()) result = result.
                     replaceAll(matcher.group("src"),
-                            matcher.group("ptr"));
+                            " " + matcher.group("ptr") + " ");
         }
-        System.out.println(result);
+        System.out.println(result.replace(" ", ""));
 
     }
 }
