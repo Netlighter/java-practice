@@ -3,7 +3,7 @@ package com.netlight.lab6;
 import java.util.Random;
 import java.util.Scanner;
 
-public class lab6 {
+public class Main {
     static int win = 0;
 
     static void justPrint(int[][] p) {
