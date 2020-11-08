@@ -1,6 +1,6 @@
-##Labs!
+## Labs!
 
-###Lab 1
+### Lab 1
 Main.java
 ```java
 package com.netlight.lab1;
@@ -74,7 +74,7 @@ public class Main {
 
 ```
 
-###Lab 2
+### Lab 2
 Main.java
 ```java
 package com.netlight.lab2;
@@ -163,7 +163,7 @@ public class Main {
 }
 ```
 
-###Lab 3
+### Lab 3
 Main.java
 ```java
 package com.netlight.lab3;
@@ -364,7 +364,7 @@ public class Main {
 }
 ```
 
-###Lab 4
+### Lab 4
 Circle.java
 ```java
 package com.netlight.lab4;
@@ -564,13 +564,13 @@ abstract class Shape {
 }
 ```
 
-###Lab 5
+### Lab 5
 Movable.java
 ```java
 package com.netlight.lab5;
 
 public interface Movable {
-    void move(int x, int y);
+    public void move(int x, int y);
 }
 ```
 
@@ -582,7 +582,7 @@ import com.netlight.lab4.Circle;
 
 public class MovableCircle extends Circle implements Movable {
 
-    private final MovablePoint center = new MovablePoint();
+    private MovablePoint center = new MovablePoint();
 
     public MovablePoint getCenter() {
         return center;
@@ -754,7 +754,7 @@ public class MovablePoint implements Movable {
 }
 ```
 
-###Lab 6
+### Lab 6
 Main.java
 ```java
 package com.netlight.lab6;
@@ -843,7 +843,7 @@ public class Main {
 }
 ```
 
-###Lab 7_8
+### Lab 7_8
 Manager.java
 ```java
 package com.netlight.lab7_8;
@@ -2099,7 +2099,7 @@ public class Employee {
 }
 ```
 
-###Lab 9
+### Lab 9
 UniqueClass.java
 ```java
 package com.netlight.lab9;
@@ -2363,7 +2363,7 @@ public class Dates {
 }
 ```
 
-###Lab 10
+### Lab 10
 Main.java
 ```java
 package com.netlight.lab10;
@@ -2468,7 +2468,7 @@ public class Main {
 }
 ```
 
-###Lab 11
+### Lab 11
 Main.java
 ```java
 package com.netlight.lab11;
@@ -2519,7 +2519,7 @@ public class Main {
 }
 ```
 
-###Lab 12
+### Lab 12
 EnumEx.java
 ```java
 package com.netlight.lab12;
@@ -2561,7 +2561,7 @@ public class Main {
 }
 ```
 
-###Lab 13
+### Lab 13
 OutOfInventoryException.java
 ```java
 package com.netlight.lab13;
@@ -2642,7 +2642,7 @@ public class Main {
 }
 ```
 
-###Lab 14
+### Lab 14
 Main.java
 ```java
 package com.netlight.lab14;
@@ -2713,7 +2713,7 @@ public class Main {
 
 ```
 
-###Lab 15_16
+### Lab 15_16
 Node.java
 ```java
 package com.netlight.lab15_16;
@@ -2807,7 +2807,7 @@ public class Main {
 }
 ```
 
-###Lab 17_18
+### Lab 17_18
 Main.java
 ```java
 package com.netlight.lab17_18;
@@ -2815,8 +2815,9 @@ package com.netlight.lab17_18;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.SQLOutput;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class Main {
     static String labNum;
@@ -2831,21 +2832,21 @@ public class Main {
         }
     }
 
-    public static void getContents(String path){
+    public static void getContents(String path) {
         File file = new File(path);
-        if(file.isDirectory()){
+        if (file.isDirectory()) {
             String[] contents = file.list();
-            for (String s:contents) {
-                if(path.contains("lab"))
+            for (String s : contents) {
+                if (path.contains("lab"))
                     labNum = path.split("lab")[1];
-                else if(path.contains("extra"))
+                else if (path.contains("extra"))
                     labNum = "extra";
-                getContents(path+"/"+s);
+                getContents(path + "/" + s);
             }
         }
 
         ArrayList labFiles = new ArrayList();
-        if(file.isFile()) {
+        if (file.isFile()) {
             StringBuilder sb = new StringBuilder();
             try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
                 sb.append(file.getName());
@@ -2862,50 +2863,47 @@ public class Main {
 
             labFiles.add(sb);
 
-            System.out.println("Checking "+labNum+" on "+file.getName());
-            if(filesMap.get(labNum)!=null) {
+            System.out.println("Checking " + labNum + " on " + file.getName());
+            if (filesMap.get(labNum) != null) {
                 ArrayList newFiles = (ArrayList) filesMap.get(labNum);
                 newFiles.add(sb);
                 filesMap.put(labNum, newFiles);
-            }
-            else
+            } else
                 filesMap.put(labNum, labFiles);
         }
     }
 
     public static void main(String[] args) {
         Path filePath = Paths.get("").toAbsolutePath();
-        getContents(filePath.toString()+"/src");
+        getContents(filePath.toString() + "/src");
         System.out.println("Labs to generate: ");
         int labsCount = new Scanner(System.in).nextInt();
         filesMap.remove(null);
 
-        pw.write("##Labs!\n\n");
+        pw.write("## Labs!\n\n");
 
         for (int i = 1; i < labsCount; i++) {
 
-            if (filesMap.get(String.valueOf(i))!=null) {
-                pw.write("###Lab "+i+"\n");
+            if (filesMap.get(String.valueOf(i)) != null) {
+                pw.write("### Lab " + i + "\n");
                 for (StringBuilder code :
-                        (ArrayList<StringBuilder>)filesMap.get(String.valueOf(i))) {
+                        (ArrayList<StringBuilder>) filesMap.get(String.valueOf(i))) {
                     pw.write(code + "\n");
                 }
-            }
-            else if (filesMap.get(i+"_"+(i+1))!=null){
-                pw.write("###Lab "+i+"_"+(i+1)+"\n");
+            } else if (filesMap.get(i + "_" + (i + 1)) != null) {
+                pw.write("### Lab " + i + "_" + (i + 1) + "\n");
                 for (StringBuilder code :
-                        (ArrayList<StringBuilder>)filesMap.get(i+"_"+(i+1))) {
+                        (ArrayList<StringBuilder>) filesMap.get(i + "_" + (i + 1))) {
                     pw.write(code + "\n");
                 }
-            }
-            else{
+            } else {
                 continue;
             }
-            System.out.println("Done "+i);
+            System.out.println("Done " + i);
         }
         pw.write("###Lab Extra\n");
         for (StringBuilder code :
-                (ArrayList<StringBuilder>)filesMap.get("extra"))
+                (ArrayList<StringBuilder>) filesMap.get("extra"))
             pw.write(code + "\n");
 
         pw.close();

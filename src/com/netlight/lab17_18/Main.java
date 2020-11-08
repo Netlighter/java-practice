@@ -68,18 +68,18 @@ public class Main {
         int labsCount = new Scanner(System.in).nextInt();
         filesMap.remove(null);
 
-        pw.write("##Labs!\n\n");
+        pw.write("## Labs!\n\n");
 
         for (int i = 1; i < labsCount; i++) {
 
             if (filesMap.get(String.valueOf(i)) != null) {
-                pw.write("###Lab " + i + "\n");
+                pw.write("### Lab " + i + "\n");
                 for (StringBuilder code :
                         (ArrayList<StringBuilder>) filesMap.get(String.valueOf(i))) {
                     pw.write(code + "\n");
                 }
             } else if (filesMap.get(i + "_" + (i + 1)) != null) {
-                pw.write("###Lab " + i + "_" + (i + 1) + "\n");
+                pw.write("### Lab " + i + "_" + (i + 1) + "\n");
                 for (StringBuilder code :
                         (ArrayList<StringBuilder>) filesMap.get(i + "_" + (i + 1))) {
                     pw.write(code + "\n");
