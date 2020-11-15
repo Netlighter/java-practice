@@ -570,7 +570,7 @@ Movable.java
 package com.netlight.lab5;
 
 public interface Movable {
-    public void move(int x, int y);
+    void move(int x, int y);
 }
 ```
 
@@ -582,7 +582,7 @@ import com.netlight.lab4.Circle;
 
 public class MovableCircle extends Circle implements Movable {
 
-    private MovablePoint center = new MovablePoint();
+    private final MovablePoint center = new MovablePoint();
 
     public MovablePoint getCenter() {
         return center;
@@ -2807,6 +2807,16 @@ public class Main {
 }
 ```
 
+.DS_Store
+```java
+   Bud1           
+                                                           aIlocblob                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             e x t r aIlocblob      ;   (������      l a b 1Ilocblob      �   (������      l a b 1dsclbool     l a b 1 0Ilocblob     �   �������      l a b 1 1Ilocblob      ;  ������      l a b 1 2Ilocblob      �  ������      l a b 1 3Ilocblob       ������      l a b 1 4Ilocblob     �  ������      l a b 1 4bwspblob   �bplist00�
+
+
+]ShowStatusBar[ShowPathbar[ShowToolbar[ShowTabView_ContainerShowSidebar\WindowBounds[ShowSidebar		_{{619, 97}, {770, 436}}	%1=I`myz{|}~�                            �    l a b 1 4vSrnlong       l a b 1 5 _ 1 6vSrnlong       l a b 2Ilocblob        (������      l a b 2dsclbool     l a b 3Ilocblob     �   (������      l a b 3dsclbool    l a b 4Ilocblob     �   (������      l a b 4dsclbool    l a b 5Ilocblob      ;   �������      l a b 6Ilocblob      �   �������      l a b 7 _ 8Ilocblob        �������      l a b 9Ilocblob     �   �������                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @      �                                        @      �                                          @      �                                          @                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   E  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       DSDB                                 `          �                                         @      �                                          @      �                                          @                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+```
+
 ### Lab 17_18
 Main.java
 ```java
@@ -2909,6 +2919,180 @@ public class Main {
         pw.close();
     }
 }
+```
+
+### Lab 19_20
+Client.java
+```java
+package com.netlight.lab19_20;
+
+
+import java.io.IOException;
+import java.net.*;
+import java.util.Scanner;
+
+public class Client {
+
+    static String ip = "127.0.0.1";
+    static int port = 1337;
+    static int offset = 0;
+
+
+    public static void sendMessage(DatagramSocket s) {
+        while (true) {
+            byte[] buff = new byte[2048];
+            String msg;
+            DatagramPacket packet = new DatagramPacket(buff, offset, buff.length);
+
+            try {
+                s.receive(packet);
+                msg = new String(buff, offset, packet.getLength());
+                System.out.println(msg);
+            } catch (IOException e) {
+                e.getStackTrace();
+            }
+        }
+    }
+
+    public static void getMessage(DatagramSocket socket) {
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            DatagramPacket toPacket;
+            byte[] toSendBuffer = scanner.nextLine().getBytes();
+            try {
+                toPacket = new DatagramPacket(
+                        toSendBuffer,
+                        offset,
+                        toSendBuffer.length,
+                        InetAddress.getByName(ip),
+                        port);
+                socket.send(toPacket);
+            } catch (UnknownHostException e) {
+                e.getStackTrace();
+            } catch (IOException e) {
+                e.getStackTrace();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Enter the port (can't be the same): ");
+        int clientPort = new Scanner(System.in).nextInt();
+        try {
+            DatagramSocket socket = new DatagramSocket(clientPort);
+            System.out.print("Enter your name: ");
+            Thread thread = new Thread(() -> getMessage(socket));
+            thread.start();
+            thread = new Thread(() -> sendMessage(socket));
+            thread.start();
+        }catch(SocketException e){
+            e.getStackTrace();
+        }
+    }
+}
+```
+
+history.txt
+```java
+15/11/20 [18:23] <Server> Hello, megaman
+15/11/20 [18:23] <megaman> hello guys
+15/11/20 [18:23] <Server> Hello, satan
+15/11/20 [18:23] <satan> yep guys
+15/11/20 [18:24] <megaman> oh god...
+15/11/20 [18:24] <Server> Hello, chicks
+15/11/20 [18:24] <chicks> what r u doing guys 
+15/11/20 [18:24] <megaman> notihjfdf
+15/11/20 [18:24] <megaman> sorry
+15/11/20 [18:24] <satan> bruh
+15/11/20 [18:24] <chicks> bruh
+```
+
+Server.java
+```java
+package com.netlight.lab19_20;
+
+import org.w3c.dom.ls.LSOutput;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+
+import java.io.File;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+
+public class Server {
+
+    static int offset = 0;
+    static DatagramSocket dgSocket;
+    static DatagramPacket packet;
+    static DatagramPacket toPacket;
+    static StringBuilder historyStr = new StringBuilder();
+    static HashMap<String, String> nickIPMap = new HashMap<>();
+    static ArrayList<InetAddress> IPList = new ArrayList<>();
+    static ArrayList<Integer> portList = new ArrayList<>();
+
+
+    public static void main(String[] args) throws IOException {
+        byte[] buffer = new byte[2048];
+        String packetAddr;
+        StringBuilder msgStr = new StringBuilder();
+        String msg;
+        dgSocket = new DatagramSocket(1337);
+        packet = new DatagramPacket(buffer, offset, buffer.length);
+
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy [HH:mm]");
+        Date date;
+        File f = new File("src/com/netlight/lab19_20/history.txt");
+        f.createNewFile();
+
+        while (true) {
+            dgSocket.receive(packet);
+            msg = new String(buffer, offset, packet.getLength());
+            date = new Date();
+            msgStr.append(dateFormat.format(date) + " ");
+            packetAddr = packet.getAddress().getHostAddress() +":"+ packet.getPort();
+
+            if (nickIPMap.get(packetAddr) == null || !portList.contains(packet.getPort())) {
+                nickIPMap.put(packetAddr, msg);
+                System.out.println(packetAddr+" connected!");
+                msgStr.append("<Server> Hello, " + msg);
+
+                IPList.add(packet.getAddress());
+                portList.add(packet.getPort());
+
+            } else
+                msgStr.append("<"+nickIPMap.get(packetAddr)+"> " + msg);
+
+            for (int i = 0; i < IPList.size(); i++) {
+                toPacket = new DatagramPacket(
+                        msgStr.toString().getBytes(),
+                        offset,
+                        msgStr.length(),
+                        IPList.get(i),
+                        portList.get(i));
+                dgSocket.send(toPacket);
+            }
+
+            System.out.println(msgStr);
+            historyStr.append(msgStr.toString() + "\n");
+            msgStr = new StringBuilder();
+            try (PrintWriter wf = new PrintWriter(f)) {
+                wf.write(historyStr.toString());
+            } catch (IOException e) {
+                e.getStackTrace();
+            }
+
+        }
+    }
+}
+
 ```
 
 ###Lab Extra
