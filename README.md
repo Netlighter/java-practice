@@ -570,7 +570,7 @@ Movable.java
 package com.netlight.lab5;
 
 public interface Movable {
-    void move(int x, int y);
+    public void move(int x, int y);
 }
 ```
 
@@ -582,7 +582,7 @@ import com.netlight.lab4.Circle;
 
 public class MovableCircle extends Circle implements Movable {
 
-    private final MovablePoint center = new MovablePoint();
+    private MovablePoint center = new MovablePoint();
 
     public MovablePoint getCenter() {
         return center;
@@ -2985,7 +2985,7 @@ public class Client {
             thread.start();
             thread = new Thread(() -> sendMessage(socket));
             thread.start();
-        }catch(SocketException e){
+        } catch (SocketException e) {
             e.getStackTrace();
         }
     }
@@ -3011,14 +3011,11 @@ Server.java
 ```java
 package com.netlight.lab19_20;
 
-import org.w3c.dom.ls.LSOutput;
-
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-
-import java.io.File;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -3057,18 +3054,18 @@ public class Server {
             msg = new String(buffer, offset, packet.getLength());
             date = new Date();
             msgStr.append(dateFormat.format(date) + " ");
-            packetAddr = packet.getAddress().getHostAddress() +":"+ packet.getPort();
+            packetAddr = packet.getAddress().getHostAddress() + ":" + packet.getPort();
 
             if (nickIPMap.get(packetAddr) == null || !portList.contains(packet.getPort())) {
                 nickIPMap.put(packetAddr, msg);
-                System.out.println(packetAddr+" connected!");
+                System.out.println(packetAddr + " connected!");
                 msgStr.append("<Server> Hello, " + msg);
 
                 IPList.add(packet.getAddress());
                 portList.add(packet.getPort());
 
             } else
-                msgStr.append("<"+nickIPMap.get(packetAddr)+"> " + msg);
+                msgStr.append("<" + nickIPMap.get(packetAddr) + "> " + msg);
 
             for (int i = 0; i < IPList.size(); i++) {
                 toPacket = new DatagramPacket(
