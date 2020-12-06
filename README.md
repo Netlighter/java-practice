@@ -570,7 +570,7 @@ Movable.java
 package com.netlight.lab5;
 
 public interface Movable {
-    public void move(int x, int y);
+    void move(int x, int y);
 }
 ```
 
@@ -582,7 +582,7 @@ import com.netlight.lab4.Circle;
 
 public class MovableCircle extends Circle implements Movable {
 
-    private MovablePoint center = new MovablePoint();
+    private final MovablePoint center = new MovablePoint();
 
     public MovablePoint getCenter() {
         return center;
@@ -3082,7 +3082,7 @@ public class Server {
 
 ```
 
-###Lab Extra
+### Lab Extra
 Main.java
 ```java
 package com.netlight.extra;
