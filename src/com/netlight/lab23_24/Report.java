@@ -1,7 +1,7 @@
 package com.netlight.lab23_24;
 
 public class Report {
-    private final String worker = "Netsvet";
+    private final String worker = "Puchkov";
     private int id;
     private int taskId;
     private double result;
