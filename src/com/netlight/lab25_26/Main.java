@@ -14,7 +14,10 @@ public class Main {
         System.out.println("or get 1337: " + test.get(1337));
         System.out.println("remove 1: " + test.remove(1));
         System.out.println("anybody there?");
-        System.out.println(test);
+
+        for (String str : test) {
+            System.out.println("- " + str);
+        }
 
     }
 }
