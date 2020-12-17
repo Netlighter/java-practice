@@ -12,15 +12,13 @@ import java.util.List;
 
 public class Worker {
     private final static String path = "http://gitlessons2020.rtuitlab.ru:3000/reflectionTasks";
-    private static HttpClient client = HttpClient.newHttpClient();
-    private static Gson gson = new Gson();
+    private static final HttpClient client = HttpClient.newHttpClient();
+    private static final Gson gson = new Gson();
 
     @Operation(name = "sum")
     public void sum(Data data) {
         int s = 0;
-        for (int i : data.getNumbers()) {
-            s += i;
-        }
+        for (int i : data.getNumbers()) s += i;
         System.out.println("Sum is: " + s);
     }
 
@@ -36,18 +34,14 @@ public class Worker {
     }
 
     public List<RefTask> getTasks() {
-        List<RefTask> tasks = null;
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create(path))
-                .build();
+        List<RefTask> tasks;
+        tasks = null;
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(path)).build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             tasks = gson.fromJson(response.body(), new TypeToken<List<RefTask>>() {
             }.getType());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
         return tasks;

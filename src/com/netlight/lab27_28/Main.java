@@ -21,7 +21,6 @@ public class Main {
 
         for (RefTask task : tasks) {
             for (Method method : methodList) {
-
                 op = method.getAnnotation(Operation.class);
                 if (task.getType().equals(op.name())) {
                     try {
