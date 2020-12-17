@@ -2,52 +2,66 @@ package com.netlight.lab25_26;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 
-public class BetterMap<K, V> implements IBetterMap<K, V>, Iterable<V> {
-    private final int size = 128;
-    private final LinkedList<Node<K, V>>[] linkmap = new LinkedList[128];
-    private final ArrayList<V> arr = new ArrayList<>();
+public class BetterMap<K, V> implements IBetterMap<K, V> {
+    private final ArrayList<ArrayList<BetterItem<K, V>>> hashMap;
+    private final int size = 2048;
+
+    public BetterMap() {
+        hashMap = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            hashMap.add(new ArrayList<>());
+        }
+    }
 
     @Override
     public void add(K k, V v) {
-        Node<K, V> node = new Node<>(k, v);
-        int i = hashCode(k);
-
-        if (linkmap[i] == null)
-            linkmap[i] = new LinkedList<>();
-
-        linkmap[i].add(node);
-        arr.add(v);
+        boolean bool = false;
+        int index = k.hashCode() % hashMap.size();
+        System.out.println("Testing index: \n");
+        System.out.println(index);
+        System.out.println("Success\n");
+        var betterItems = hashMap.get(index);
+        if (betterItems.size() == 0) {
+            betterItems.add(new BetterItem<>(k, v));
+        } else {
+            for (int i = 0; i < betterItems.size(); i++) {
+                if (betterItems.get(i).getKey().equals(k)) {
+                    betterItems.set(i, new BetterItem<>(k, v));
+                    bool = true;
+                    break;
+                }
+            }
+            if (!bool) {
+                betterItems.add(new BetterItem<>(k, v));
+                System.out.println("Processing...\n");
+                System.out.println(betterItems.add(new BetterItem<>(k, v)));
+                System.out.println("Success\n");
+            }
+        }
     }
 
     @Override
     public V get(K k) {
-        int i = hashCode(k);
-        if (linkmap[i] != null) {
-            for (Node<K, V> node : linkmap[i]) {
-                if (node.getKey().equals(k))
-                    return node.getValue();
-            }
+        int index = k.hashCode() % hashMap.size();
+        var betterItems = hashMap.get(index);
+        for (BetterItem<K, V> betterItem : betterItems) {
+            if (betterItem.getKey().equals(k))
+                return betterItem.getValue();
         }
         return null;
     }
 
     @Override
     public V remove(K k) {
-        int i = hashCode(k);
-        V v;
-
-        if (linkmap[i] != null) {
-            Node<K, V>[] nodes = linkmap[i].toArray(new Node[linkmap[i].size()]);
-
-            for (int n = 0; n < nodes.length; n++) {
-                if (nodes[n].getKey().equals(k)) {
-                    v = nodes[n].getValue();
-                    arr.remove(linkmap[i].get(n).getValue());
-                    linkmap[i].remove(n);
-                    return v;
-                }
+        int index = k.hashCode() % hashMap.size();
+        var betterItems = hashMap.get(index);
+        for (int i = 0; i < betterItems.size(); i++) {
+            if (betterItems.get(i).getKey().equals(k)) {
+                BetterItem<K, V> item = new BetterItem<>();
+                item.setValue(betterItems.get(i).getValue());
+                betterItems.remove(betterItems.get(i));
+                return item.getValue();
             }
         }
         return null;
@@ -55,52 +69,38 @@ public class BetterMap<K, V> implements IBetterMap<K, V>, Iterable<V> {
 
     @Override
     public Iterator<V> iterator() {
-        return new NewIterator(this);
-    }
+        return (new Iterator<V>() {
+            int currItemIndex = 0;
+            int currArrIndex = 0;
 
-    private int hashCode(K k) {
-        return k.hashCode() % size;
-    }
+            @Override
+            public boolean hasNext() {
+                if (currArrIndex == size - 1)
+                    return false;
 
-    private class Node<K, V> {
-        private final K k;
-        private final V v;
+                while (hashMap.get(currArrIndex + 1).size() == 0) {
+                    currArrIndex++;
+                    currItemIndex = 0;
+                    if (currArrIndex == size - 1)
+                        return false;
+                }
 
-        public Node(K k, V v) {
-            this.k = k;
-            this.v = v;
-        }
+                var betterItems = hashMap.get(currArrIndex);
+                if (currItemIndex == betterItems.size()) {
+                    currArrIndex++;
+                    currItemIndex = 0;
+                }
+                return (currArrIndex < size) &&
+                        (currItemIndex < betterItems.size());
+            }
 
-        public K getKey() {
-            return k;
-        }
-
-        public V getValue() {
-            return v;
-        }
-
-        @Override
-        public String toString() {
-            return "{" + k +
-                    "=" + v +
-                    "}";
-        }
-    }
-
-    private class NewIterator implements Iterator<V> {
-        private int currI = 0;
-
-        public NewIterator(BetterMap<K, V> bm) {
-        }
-
-        @Override
-        public boolean hasNext() {
-            return currI < arr.toArray().length;
-        }
-
-        @Override
-        public V next() {
-            return arr.get(currI++);
-        }
+            @Override
+            public V next() {
+                return hashMap
+                        .get(currArrIndex)
+                        .get(currItemIndex++).
+                                getValue();
+            }
+        });
     }
 }

@@ -2,7 +2,7 @@ package com.netlight.lab25_26;
 
 public class Main {
     public static void main(String[] args) {
-        BetterMap test = new BetterMap();
+        BetterMap<Integer, String> test = new BetterMap();
 
         test.add(1337, "leet");
         test.add(1, "first");
@@ -14,9 +14,7 @@ public class Main {
         System.out.println("or get 1337: " + test.get(1337));
         System.out.println("remove 1: " + test.remove(1));
         System.out.println("anybody there?");
+        System.out.println(test);
 
-        for (Object obj : test) {
-            System.out.println(obj);
-        }
     }
 }
